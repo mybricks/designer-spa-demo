@@ -33,8 +33,37 @@ const config: Configuration = {
           },
         },
       },
-    ],
-  },
+      {
+        test: /\.less?$/,
+        use: [
+          {
+            loader: "style-loader",
+            options: {
+              attributes: {
+                title: "less"
+              }
+            }
+          },
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                localIdentName: "[local]-[hash:5]"
+              }
+            }
+          },
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                javascriptEnabled: true
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
 };
 
 export default config;
