@@ -14,9 +14,9 @@ const config: Configuration = {
   },
   externals: [
     {
-      "react": "React",
+      react: "React",
       "react-dom": "ReactDOM",
-    }
+    },
   ],
   module: {
     rules: [
@@ -40,30 +40,30 @@ const config: Configuration = {
             loader: "style-loader",
             options: {
               attributes: {
-                title: "less"
-              }
-            }
+                title: "less",
+              },
+            },
           },
           {
             loader: "css-loader",
             options: {
               modules: {
-                localIdentName: "[local]-[hash:5]"
-              }
-            }
+                localIdentName: "[local]-[hash:5]",
+              },
+            },
           },
           {
             loader: "less-loader",
             options: {
               lessOptions: {
-                javascriptEnabled: true
-              }
-            }
-          }
-        ]
-      }
-    ]
-  }
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
 };
 
 export default config;
