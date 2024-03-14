@@ -5,7 +5,10 @@ import css from "./app.less";
 const SPADesigner = (window as any).mybricks.SPADesigner;
 
 export default function App() {
-  const designerRef = useRef<{ dump: () => any }>(null);
+  const designerRef = useRef<{
+    /** 导出当前页面搭建数据 */
+    dump: () => any;
+  }>(null);
 
   const save = () => {
     const dumpJSON = designerRef.current?.dump();
@@ -26,11 +29,16 @@ export default function App() {
       <SPADesigner
         ref={designerRef}
         config={{
+          /** 加载组件库 */
           comLibLoader: () => {
             return new Promise((resolve) => {
-              resolve((window as any)["__comlibs_edit_"]);
+              resolve([
+                "https://assets.mybricks.world/comlibs/mybricks.normal-pc/1.5.26/2024-03-05_11-25-10/edit.js",
+                "https://assets.mybricks.world/comlibs/mybricks.basic-comlib/1.1.17/2024-03-04_14-46-39/edit.js",
+              ]);
             });
           },
+          /** 加载页面搭建数据 */
           pageContentLoader: () => {
             return new Promise((resolve) => {
               const dumpJSON = localStorage.getItem("--mybricks-dumpJSON--");
@@ -38,18 +46,26 @@ export default function App() {
             });
           },
           geoView: {
+            /** 开启多场景 */
             scenes: {
+              /** 可添加的多场景 */
               adder: [
+                /** 默认页面（普通画布） */
                 {
                   type: "normal",
                   title: "页面",
                 },
+                /** 来自组件库 */
                 {
+                  /** 定义为弹出层 */
                   type: "popup",
                   title: "对话框",
                   template: {
+                    /** 对应组件的唯一namespace */
                     namespace: "mybricks.basic-comlib.popup",
+                    /** 不允许删除 */
                     deletable: false,
+                    /** 作为根组件 */
                     asRoot: true,
                   },
                 },
