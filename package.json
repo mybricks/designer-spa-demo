@@ -33,6 +33,7 @@
     "webpack-merge": "^5.10.0"
   },
   "dependencies": {
-    "@mybricks/plugin-connector-http": "^1.2.10"
+    "@mybricks/plugin-connector-http": "^1.2.10",
+    "@mybricks/plugin-note": "^0.0.2"
   }
 }

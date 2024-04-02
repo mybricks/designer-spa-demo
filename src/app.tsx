@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 
+import notePlugin from "@mybricks/plugin-note";
 import servicePlugin from "@mybricks/plugin-connector-http";
 
 import css from "./app.less";
@@ -58,6 +59,15 @@ export default function App() {
                 {
                   type: "normal",
                   title: "页面",
+                  inputs: [
+                    {
+                      id: "open",
+                      title: "打开",
+                      schema: {
+                        type: "any",
+                      },
+                    },
+                  ],
                 },
                 /** 来自组件库 */
                 {
@@ -88,7 +98,17 @@ export default function App() {
           toplView: {
             title: "交互",
             cards: {
-              main: {},
+              main: {
+                inputs: [
+                  {
+                    id: "open",
+                    title: "打开",
+                    schema: {
+                      type: "any",
+                    },
+                  },
+                ],
+              },
             },
           },
           com: {
@@ -113,6 +133,42 @@ export default function App() {
           plugins: [
             /** 连接器 */
             servicePlugin(),
+            /** 评论插件 */
+            notePlugin({
+              /** 当前用户信息 */
+              user: {
+                id: "0",
+                name: "我",
+                email: "wo@mybricks.com",
+                avatar: "https://my.mybricks.world/icon.png",
+              },
+              /** 查询用户信息 */
+              onSearchUser: (keyword: string) => {
+                return new Promise((resolve) => {
+                  console.log("查询内容，@后字符: ", keyword);
+                  resolve([
+                    {
+                      id: "0",
+                      name: "我",
+                      email: "wo@mybricks.com",
+                      thumbnailAvatarUrl: "https://my.mybricks.world/icon.png",
+                    },
+                    {
+                      id: "1",
+                      name: "用户1",
+                      email: "yonghu1@mybricks.com",
+                      thumbnailAvatarUrl: "https://my.mybricks.world/icon.png",
+                    },
+                    {
+                      id: "2",
+                      name: "用户2",
+                      email: "yonghu2@mybricks.com",
+                      thumbnailAvatarUrl: "https://my.mybricks.world/icon.png",
+                    },
+                  ]);
+                });
+              },
+            }),
           ],
         }}
       />
