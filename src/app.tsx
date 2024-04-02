@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 
+import servicePlugin from "@mybricks/plugin-connector-http";
+
 import css from "./app.less";
 
 const SPADesigner = (window as any).mybricks.SPADesigner;
@@ -8,6 +10,8 @@ export default function App() {
   const designerRef = useRef<{
     /** 导出当前页面搭建数据 */
     dump: () => any;
+    /** 获取插件 */
+    getPlugin: (pluginName: string) => any;
   }>(null);
 
   const save = () => {
@@ -88,10 +92,28 @@ export default function App() {
             },
           },
           com: {
+            /** 组件调用的各类api，通过env注入 */
             env: {
+              /** 多语言相关 */
               i18n: (value: string) => value,
+              /** 调用连接器配置接口 */
+              callConnector(connector, params, connectorConfig = {}) {
+                const plugin = designerRef.current!.getPlugin(
+                  connector.connectorName,
+                );
+                return plugin.callConnector(
+                  { ...connector, useProxy: false },
+                  params,
+                  connectorConfig,
+                );
+              },
             },
           },
+          /** 插件 */
+          plugins: [
+            /** 连接器 */
+            servicePlugin(),
+          ],
         }}
       />
     </div>

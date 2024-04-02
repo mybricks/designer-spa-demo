@@ -5,6 +5,7 @@
     "strict": true,
     "jsx": "react",
     "resolveJsonModule": true,
+    "noImplicitAny": false,
 
     "types": ["node"]
   },
