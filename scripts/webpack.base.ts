@@ -1,5 +1,6 @@
 import path from "path";
 import { Configuration } from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const config: Configuration = {
   entry: {
@@ -64,6 +65,13 @@ const config: Configuration = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      chunks: ["index"],
+      template: path.resolve(__dirname, "../templates/index.ejs"),
+    }),
+  ],
 };
 
 export default config;
