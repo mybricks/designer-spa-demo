@@ -132,7 +132,9 @@ export default function App() {
           /** 插件 */
           plugins: [
             /** 连接器 */
-            servicePlugin(),
+            servicePlugin({
+              isPrivatization: false,
+            }),
             /** 评论插件 */
             notePlugin({
               /** 当前用户信息 */
